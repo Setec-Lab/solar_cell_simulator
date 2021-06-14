@@ -69,7 +69,30 @@ def find_nearest(array, value):
     idx = (np.abs(array - value)).argmin()
     return array[idx]
 
-vout =
+def interpolate_voltage(tableVoltage, tableCurrent, desiredCurrent):
+    n = len(tableVoltage)
+    vOut = 0
+    for j in range(n-1):
+        j += 1
+        i = 1024 - j
+        if desiredCurrent < tableCurrent[i]:
+            # Puede que haya un error, puede que el desired current va en el multiplicador y no en el numerador
+            vOut = tableVoltage(i) + (tableVoltage(i+1) - tableVoltage(i))*((desiredCurrent - tableCurrent(i))/(tableCurrent(i+1) - tableCurrent(i)))
+            break
+    return vOut
+
+def interpolate_current(tableVoltage, tableCurrent, desiredVoltage):
+    n = len(tableVoltage)
+    cOut = 0
+    for j in range(n-1):
+        j += 1
+        i = 1024 - j
+        if desiredVoltage < tableVoltage[i]:
+            # Puede que haya un error, puede que el desired voltage va en el multiplicador y no en el numerador
+            cOut = tableCurrent(i) + (tableCurrent(i+1) - tableCurrent(i))*((desiredVoltage - tableVoltage(i))/(tableVoltage(i+1) - tableVoltage(i)))
+            break
+    return cOut
+
 
 plt.plot(v, i)
 plt.show()
