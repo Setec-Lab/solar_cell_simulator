@@ -19,6 +19,13 @@ class Fuente:  # Esta clase describe cada neurona
         self.fuente.write(":APPLY CH{},{},{}".format(channel, voltaje, corriente))
         return self.fuente.query("APPLY? CH{}".format(channel))
 
+    def medir_todo(self, channel: int):
+        medicion = self.fuente.query(":MEASURE:ALL?").split(",")
+        medicion[-1] = medicion[-1][:-1]
+        voltaje = medicion[0]
+        corriente = medicion[1]
+        potencia = medicion[2]
+        return float(voltaje), float(corriente), float(potencia)
 
 class Carga:  # Esta clase describe cada neurona
     def __init__(self, instrument, name=None):
