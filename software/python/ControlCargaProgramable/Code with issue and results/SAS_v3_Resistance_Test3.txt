@@ -1,0 +1,2 @@
+This notepad takes measurements from the generator and then the load
+Time,Counter,Vc,Ic,Rc,Vm,Im,Rm
